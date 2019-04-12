@@ -7,7 +7,7 @@
 			<news:name>Foo</news:name>
 			<news:language>en</news:language>
 		</news:publication>
-		<news:publication_date>2019-01-01T00:00:00UTC</news:publication_date>
+		<news:publication_date>2019-01-01T00:00:00+00:00</news:publication_date>
 		<news:title>Bar</news:title>
 	</news:news>
 </url>

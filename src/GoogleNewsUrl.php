@@ -10,7 +10,7 @@ class GoogleNewsUrl implements ISitemapUrl {
 
 	use SmartObject;
 
-	private const DATE_FORMAT = 'Y-m-d\TH:i:sT';
+	private const DATE_FORMAT = 'Y-m-d\TH:i:sP';
 
 	/** @var SitemapUrl */
 	private $sitemapUrl;
