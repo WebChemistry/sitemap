@@ -34,16 +34,22 @@ class SitemapUrl implements ISitemapUrl {
 		return self::create($location);
 	}
 
-	public function setLastModification(?DateTime $lastModification): void {
+	public function setLastModification(?DateTime $lastModification): self {
 		$this->lastModification = $lastModification;
+
+		return $this;
 	}
 
-	public function setChangeFrequency(?ChangeFrequency $changeFrequency): void {
+	public function setChangeFrequency(?ChangeFrequency $changeFrequency): self {
 		$this->changeFrequency = $changeFrequency;
+
+		return $this;
 	}
 
-	public function setPriority(?int $priority): void {
+	public function setPriority(?int $priority): self {
 		$this->priority = $priority;
+
+		return $this;
 	}
 
 	public static function install(ISitemap $sitemap): void {
