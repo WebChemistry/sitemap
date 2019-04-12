@@ -30,6 +30,22 @@ class SitemapUrl implements ISitemapUrl {
 		$this->priority = $priority;
 	}
 
+	public function setLastModification(?DateTime $lastModification): void {
+		$this->lastModification = $lastModification;
+	}
+
+	public function setChangeFrequency(?ChangeFrequency $changeFrequency): void {
+		$this->changeFrequency = $changeFrequency;
+	}
+
+	public function setPriority(?int $priority): void {
+		$this->priority = $priority;
+	}
+
+	public static function install(ISitemap $sitemap): void {
+		$sitemap->addSchema('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
+	}
+
 	public static function install(ISitemap $sitemap): void {
 		$sitemap->addSchema('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
 	}
