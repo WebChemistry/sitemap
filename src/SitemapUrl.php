@@ -50,10 +50,6 @@ class SitemapUrl implements ISitemapUrl {
 		$sitemap->addSchema('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
 	}
 
-	public static function install(ISitemap $sitemap): void {
-		$sitemap->addSchema('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-	}
-
 	public function write(XMLWriter $writer): void {
 		$writer->writeElement('loc', $this->location);
 		if ($this->priority) {
