@@ -31,7 +31,7 @@ class SitemapUrl implements ISitemapUrl {
 	}
 
 	public static function create(string $location): SitemapUrl {
-		return self::create($location);
+		return new SitemapUrl($location);
 	}
 
 	public function setLastModification(?DateTime $lastModification): self {
