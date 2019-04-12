@@ -30,6 +30,10 @@ class SitemapUrl implements ISitemapUrl {
 		$this->priority = $priority;
 	}
 
+	public static function create(string $location): SitemapUrl {
+		return self::create($location);
+	}
+
 	public function setLastModification(?DateTime $lastModification): void {
 		$this->lastModification = $lastModification;
 	}
