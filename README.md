@@ -4,7 +4,7 @@
 $sitemap = new Sitemap();
 
 $sitemap->add(
-	new SitemapUrl('http://example.com', $date, ChangeFrequency::ALWAYS(), 90)
+	new SitemapItem('http://example.com', new DateTime(), ChangeFrequency::ALWAYS(), 90)
 );
 
 echo $sitemap->toString()
@@ -15,9 +15,9 @@ echo $sitemap->toString()
 ```php
 $sitemap = new Sitemap();
 
-$sitemap->add(new GoogleNewsUrl(
-	new SitemapUrl('http://example.com'),
-	'Foo', 'en', 'Bar', $date
+$sitemap->add(new GoogleNewsItem(
+	new SitemapItem('http://example.com'),
+	'Example', 'en', 'Subject', new DateTime()
 ));
 
 echo $sitemap->toString();
