@@ -4,6 +4,10 @@ namespace WebChemistry\Sitemap;
 
 interface ISitemap {
 
-	public function addSchema(string $name, string $value): ISitemap;
+	public function add(ISitemapItem $item): ISitemap;
+
+	public function toString(): string;
+
+	public function close(): void;
 
 }

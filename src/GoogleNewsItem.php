@@ -6,14 +6,14 @@ use DateTime;
 use Nette\SmartObject;
 use XMLWriter;
 
-class GoogleNewsUrl implements ISitemapUrl {
+class GoogleNewsItem implements ISitemapItem {
 
 	use SmartObject;
 
 	private const DATE_FORMAT = 'Y-m-d\TH:i:sP';
 
-	/** @var SitemapUrl */
-	private $sitemapUrl;
+	/** @var SitemapItem */
+	private $sitemapItem;
 
 	/** @var string */
 	private $name;
@@ -27,22 +27,16 @@ class GoogleNewsUrl implements ISitemapUrl {
 	/** @var DateTime|null */
 	private $publicationDate;
 
-	public function __construct(ISitemapUrl $sitemapUrl, string $name, string $language, string $title, DateTime $publicationDate) {
-		$this->sitemapUrl = $sitemapUrl;
+	public function __construct(SitemapItem $sitemapItem, string $name, string $language, string $title, DateTime $publicationDate) {
+		$this->sitemapItem = $sitemapItem;
 		$this->name = $name;
 		$this->language = $language;
 		$this->title = $title;
 		$this->publicationDate = $publicationDate;
 	}
 
-	public static function install(ISitemap $sitemap): void {
-		SitemapUrl::install($sitemap);
-
-		$sitemap->addSchema('xmlns:news', 'https://www.google.com/schemas/sitemap-news/0.9');
-	}
-
 	public function write(XMLWriter $writer): void {
-		$this->sitemapUrl->write($writer);
+		$this->sitemapItem->write($writer);
 
 		$writer->startElement('news:news');
 

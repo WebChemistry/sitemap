@@ -4,13 +4,8 @@ namespace WebChemistry\Sitemap;
 
 use XMLWriter;
 
-interface ISitemapUrl {
+interface ISitemapItem {
 
 	public function write(XMLWriter $writer): void;
-
-	/**
-	 * @internal
-	 */
-	public static function install(ISitemap $sitemap): void;
 
 }

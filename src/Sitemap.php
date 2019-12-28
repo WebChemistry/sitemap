@@ -12,65 +12,58 @@ class Sitemap implements ISitemap {
 	/** @var XMLWriter */
 	protected $writer;
 
-	/** @var ISitemapUrl[] */
-	protected $elements = [];
+	/** @var bool */
+	private $closed = false;
 
-	/** @var string[] */
-	protected $attributes = [];
-
-	/** @var bool[] */
-	private $used = [];
-
-	/** @var string[] */
-	private $schema = [];
-
-	public function __construct() {
+	/**
+	 * @param ISitemapSchema[] $schemas
+	 */
+	public function __construct(array $schemas = []) {
 		$this->writer = new XMLWriter();
 		$this->writer->openMemory();
 		$this->writer->setIndent(true);
 		$this->writer->setIndentString("\t");
+		$this->writer->startDocument('1.0', 'utf-8');
+		$this->writer->startElement('urlset');
+
+		$this->writer->writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
+
+		foreach ($schemas as $schema) {
+			$this->addSchema($schema);
+		}
 	}
 
-	public function addSchema(string $name, string $value): ISitemap {
-		$this->schema[$name] = $value;
+	protected function addSchema(ISitemapSchema $schema): void {
+		$this->writer->writeAttribute($schema->getName(), $schema->getValue());
+	}
 
-		return $this;
- 	}
-
-	public function add(ISitemapUrl $url) {
-		$class = get_class($url);
-		if (!isset($this->used[$class])) {
-			$url->install($this);
-
-			$this->used[$class] = true;
-		}
-
+	public function add(ISitemapItem $item): ISitemap {
 		$this->writer->startElement('url');
 
-		$url->write($this->writer);
+		$item->write($this->writer);
 
 		$this->writer->endElement();
 
 		return $this;
 	}
 
-	public function toString(): string {
-		$writer = new XMLWriter();
-		$writer->openMemory();
-		$writer->setIndentString("\t");
-		$writer->setIndent(true);
-		$writer->startDocument('1.0', 'utf-8');
-		$writer->startElement('urlset');
+	public function close(): void {
+		$this->closed = true;
+	}
 
-		foreach ($this->schema as $name => $value) {
-			$writer->writeAttribute($name, $value);
+	protected function checkClose(): void {
+		if ($this->closed) {
+			throw new SitemapClosedException('Sitemap is closed');
+		}
+	}
+
+	public function toString(): string {
+		if (!$this->closed) {
+			$this->writer->endElement();
+			$this->close();
 		}
 
-		$writer->writeRaw("\n" . $this->writer->outputMemory());
-
-		$writer->endElement();
-
-		return $writer->outputMemory();
+		return $this->writer->outputMemory();
 	}
 
 }

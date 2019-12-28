@@ -6,7 +6,7 @@ use DateTime;
 use Nette\SmartObject;
 use XMLWriter;
 
-class SitemapUrl implements ISitemapUrl {
+class SitemapItem implements ISitemapItem {
 
 	use SmartObject;
 
@@ -30,8 +30,9 @@ class SitemapUrl implements ISitemapUrl {
 		$this->priority = $priority;
 	}
 
-	public static function create(string $location): SitemapUrl {
-		return new SitemapUrl($location);
+	public static function create(string $location, ?DateTime $lastModification = null, ?ChangeFrequency $changeFrequency = null,
+								  ?int $priority = null): SitemapItem {
+		return new static($location, $lastModification, $changeFrequency, $priority);
 	}
 
 	public function setLastModification(?DateTime $lastModification): self {
@@ -50,10 +51,6 @@ class SitemapUrl implements ISitemapUrl {
 		$this->priority = $priority;
 
 		return $this;
-	}
-
-	public static function install(ISitemap $sitemap): void {
-		$sitemap->addSchema('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
 	}
 
 	public function write(XMLWriter $writer): void {
