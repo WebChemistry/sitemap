@@ -2,7 +2,7 @@
 	"name": "webchemistry/sitemap",
 	"require": {
 		"php": ">= 7.2",
-		"nette/utils": "^3.0.0"
+		"nette/utils": "^3.0.0 || ^4.0"
 	},
 	"autoload": {
 		"psr-4": {
